@@ -14,7 +14,6 @@ report 50148 AGTTask19march
             RequestFilterFields = "No.";
 
 
-
             dataitem("Purchase Line"; "Purchase Line")
             {
                 DataItemLink = "Document No." = field("No."), "Document Type" = field("Document Type");
@@ -38,6 +37,7 @@ report 50148 AGTTask19march
                         SetFilter(Number, '%1..%2', 1, UserInputrp);
                     end;
                 }
+
             }
         }
     }
