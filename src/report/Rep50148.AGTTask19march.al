@@ -8,38 +8,37 @@ report 50148 AGTTask19march
 
     dataset
     {
-        dataitem(Integer; Integer)
+        dataitem("Purchase Header"; "Purchase Header")
         {
-            DataItemTableView = SORTING(Number);
-            column(Number; Number)
-            {
-            }
-            dataitem("Purchase Header"; "Purchase Header")
-            {
-                DataItemTableView = WHERE("Document Type" = CONST(Order));
-                RequestFilterFields = "No.";
+            DataItemTableView = WHERE("Document Type" = CONST(Order));
+            RequestFilterFields = "No.";
 
-                column(BuyfromVendorName_PurchaseHeader; "Buy-from Vendor Name") { }
-                column(BuyfromVendorNo_PurchaseHeader; "Buy-from Vendor No.") { }
-                column(PaytoName_PurchaseHeader; "Pay-to Name") { }
-                column(BuyfromContact_PurchaseHeader; "Buy-from Contact") { }
-                column(No_PurchaseHeader; "No.") { }
 
-                dataitem("Purchase Line"; "Purchase Line")
+
+            dataitem("Purchase Line"; "Purchase Line")
+            {
+                DataItemLink = "Document No." = field("No."), "Document Type" = field("Document Type");
+                dataitem(Integer; Integer)
                 {
-                    DataItemLink = "Document No." = field("No."), "Document Type" = field("Document Type");
 
-                    column(BuyfromVendorNo_PurchaseLine; "Buy-from Vendor No.") { }
-                    column(DocumentType_PurchaseLine; "Document Type") { }
-                    column(No_PurchaseLine; "No.") { }
-                    column(QuantityBase_PurchaseLine; "Quantity (Base)") { }
-                    column(VendorItemNo_PurchaseLine; "Vendor Item No.") { }
+                    DataItemTableView = SORTING(Number);
+                    column(Number; Number) { }
+                    column(BuyfromVendorName_PurchaseHeader; "Purchase Header"."Buy-from Vendor Name") { }
+                    column(BuyfromVendorNo_PurchaseHeader; "Purchase Header"."Buy-from Vendor No.") { }
+                    column(PaytoName_PurchaseHeader; "Purchase Header"."Pay-to Name") { }
+                    column(BuyfromContact_PurchaseHeader; "Purchase Header"."Buy-from Contact") { }
+                    column(No_PurchaseHeader; "Purchase Header"."No.") { }
+                    column(BuyfromVendorNo_PurchaseLine; "Purchase Line"."Buy-from Vendor No.") { }
+                    column(DocumentType_PurchaseLine; "Purchase Line"."Document Type") { }
+                    column(No_PurchaseLine; "Purchase Line"."No.") { }
+                    column(QuantityBase_PurchaseLine; "Purchase Line"."Quantity (Base)") { }
+                    column(VendorItemNo_PurchaseLine; "Purchase Line"."Vendor Item No.") { }
+                    trigger OnPreDataItem()
+                    begin
+                        SetFilter(Number, '%1..%2', 1, UserInputrp);
+                    end;
                 }
             }
-            trigger OnPreDataItem()
-            begin
-                SetFilter(Number, '%1..%2', 1, UserInputrp);
-            end;
         }
     }
 
